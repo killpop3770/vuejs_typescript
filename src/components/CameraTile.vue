@@ -1,36 +1,30 @@
 <template>
-  <div class="hello">
-
-  </div>
+  <div class="tile"></div>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from 'vue-class-component';
 
-@Options({
-  props: {
-    msg: String
-  }
-})
-export default class HelloWorld extends Vue {
-  msg!: string
+
+<script lang="ts">
+import {Vue} from "vue-class-component";
+
+export default class Tile extends Vue{
+  name: "CameraTile"
 }
+
 </script>
+
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
+.tile {
+  width: 1000px;
+  height: 300px;
+  border: 3px solid black;
+  border-radius: 10px;
+  color: cyan;
+  padding: 15px;
+  margin: 10px auto 10px auto;
+
 }
 </style>

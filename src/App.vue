@@ -1,20 +1,33 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-<!--  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>-->
-  <CameraTile/>
+  <Header/>
+  <div>
+<!--     https://github.com/Roman1510/memory-card-game/blob/main/src/App.vue-->
+    <CameraTile v-for="cameraTile in cameraTileList" v-bind:key="cameraTile"/>
+  </div>
 </template>
 
 
-
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
-import CameraTile from './components/CameraTile.vue';
+import CameraTile from "@/components/CameraTile.vue"
+import Header from "@/components/Header.vue"
 
-@Options({
+export default {
+
   components: {
-    CameraTile,
+    Header,
+    CameraTile
   },
-})
 
-export default class App extends Vue {}
+  data(): any {
+    return {
+      cameraTileList: [
+        {number: "1"},
+        {number: "2"},
+        {number: "3"},
+        {number: "4"},
+      ]
+    }
+  }
+}
+
 </script>
