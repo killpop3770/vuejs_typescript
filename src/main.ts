@@ -1,13 +1,8 @@
-import { createApp } from 'vue'
+import {createApp} from 'vue'
 import App from './App.vue'
-// import getCamName from "@/store";
 
-import BootstrapVue from "bootstrap-vue"
+import "@popperjs/core"
 import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap-vue/dist/bootstrap-vue.css"
-import Vue from "vue";
-Vue.useCssModule("BootstrapVue");
-
-// getCamName();
+import "bootstrap"
 
 createApp(App).mount('#app')

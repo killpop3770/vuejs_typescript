@@ -1,16 +1,16 @@
 <template>
-  <div class="tile"></div>
+  <div class="tile">{{l}}</div>
 </template>
 
 
 
 <script lang="ts">
 import {Vue} from "vue-class-component";
+import l from "@/store";
 
 export default class Tile extends Vue{
   name: "CameraTile"
 }
-
 </script>
 
 
@@ -25,6 +25,5 @@ export default class Tile extends Vue{
   color: cyan;
   padding: 15px;
   margin: 10px auto 10px auto;
-
 }
 </style>

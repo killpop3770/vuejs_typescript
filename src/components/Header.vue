@@ -1,8 +1,7 @@
 <template>
-<!--  <div class="header"><img alt="Vue logo" src="../assets/logo.png"></div>-->
 
   <div class="container-fluid" id="main">
-    <div style="position: sticky; top: 0; z-index: 100" >
+    <div style="position: sticky; top: 0; z-index: 100">
       <div class="row">
         <div class="col-12">
           <div class="main-nav-up">
@@ -111,15 +110,16 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid" id="container">
-  </div>
+  <div class="container-fluid" id="container"></div>
 </template>
+
 
 <script>
 export default {
   name: "Header"
 }
 </script>
+
 
 <style scoped>
 /*.header {*/

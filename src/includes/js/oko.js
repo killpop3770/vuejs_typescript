@@ -12,11 +12,11 @@ const LOAD_TIME=2000;
 const DEV_image = false;
 
 
-let canvasesAndZones = Array();
-let zonesArray = Array();
+let canvasesAndZones = [];
+let zonesArray = [];
 let cam;
-let fillColors = Array();
-let strokeColors = Array();
+let fillColors = [];
+let strokeColors = [];
 fillColors[0] = "rgba(253,152,152,0.5)";
 fillColors[1] = "rgba(226,231,28,0.5)";
 fillColors[2] = "rgba(58,207,240,0.5)";
@@ -48,11 +48,11 @@ function initTabs() {
 function initZoneContainer() {
     for (let i = 0; i < cam.length; i++) {
         let secondTabContent = document.getElementById("tabContent-" + i + "-1");
-        canvasesAndZones[i] = Array();
+        canvasesAndZones[i] = [];
         if (cam[i].camRoi[0] != "null") {
-            zonesArray[i] = Array();
+            zonesArray[i] = [];
             for (let j = 0; j < cam[i].camRoi.length; j++) {
-                zonesArray[i][j] = Array();
+                zonesArray[i][j] = [];
                 let zoneContainer = document.createElement("div");
                 zoneContainer.classList.add("zonecontaine")
                 let zoneRow = document.createElement("div");
@@ -87,9 +87,9 @@ function initZoneContainer() {
                 zoneRow.appendChild(secondDiv);
                 zoneContainer.appendChild(zoneRow);
                 secondTabContent.appendChild(zoneContainer);
-                canvasesAndZones[i]['zones'] = Array();
-                canvasesAndZones[i]['zones'][j] = Array();
-                canvasesAndZones[i]['zones'][j]["points"] = Array();
+                canvasesAndZones[i]['zones'] = [];
+                canvasesAndZones[i]['zones'][j] = [];
+                canvasesAndZones[i]['zones'][j]["points"] = [];
                 canvasesAndZones[i]['zones'][j]["points"] = okoStringToArray(cam[i].camRoi[j]);
             }
         }
@@ -233,12 +233,12 @@ function addZoneFromButton(canvasId) {
     let canvas = canvasesAndZones[canvasId];
     let startX = (canvas['canvas'].width - 100) / 2;
     let startY = (canvas['canvas'].height - 100) / 2;
-    let zone = Array();
-    zone["points"] = Array();
-    zone["points"][0] = Array();
-    zone["points"][1] = Array();
-    zone["points"][2] = Array();
-    zone["points"][3] = Array();
+    let zone = [];
+    zone["points"] = [];
+    zone["points"][0] = [];
+    zone["points"][1] = [];
+    zone["points"][2] = [];
+    zone["points"][3] = [];
     zone["points"][0]["x"] = startX;
     zone["points"][0]["y"] = startY;
     zone["points"][1]["x"] = startX + 100;
@@ -307,7 +307,7 @@ function addPoint(canvas, e, id) {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         let context = checkLineColliding(x, y, idCanvas);
-        let temp = Array();
+        let temp = [];
         temp["x"] = context["midX"];
         temp["y"] = context["midY"];
         console.log(context);
@@ -319,7 +319,7 @@ function addPoint(canvas, e, id) {
 }
 
 function checkLineColliding(x, y, id) {
-    let context = Array();
+    let context = [];
     for (let zoneIndex = 0; zoneIndex < canvasesAndZones[id]["zones"].length; zoneIndex++) {
         let zone = canvasesAndZones[id]["zones"][zoneIndex];
         for (let i = 0; i < zone["points"].length; i++) {
@@ -373,12 +373,12 @@ function drawZone(id) {
     if (canvas["zones"].length == 0) {
 
         //console.log(startX);
-        let zone = Array();
-        zone["points"] = Array();
-        zone["points"][0] = Array();
-        zone["points"][1] = Array();
-        zone["points"][2] = Array();
-        zone["points"][3] = Array();
+        let zone = [];
+        zone["points"] = [];
+        zone["points"][0] = [];
+        zone["points"][1] = [];
+        zone["points"][2] = [];
+        zone["points"][3] = [];
         zone["points"][0]["x"] = startX;
         zone["points"][0]["y"] = startY;
         zone["points"][1]["x"] = startX + 100;
@@ -391,12 +391,12 @@ function drawZone(id) {
         drawPointsSingleCanvas(id);
         //console.log(canvas)
     } else {
-        let zone = Array();
-        zone["points"] = Array();
-        zone["points"][0] = Array();
-        zone["points"][1] = Array();
-        zone["points"][2] = Array();
-        zone["points"][3] = Array();
+        let zone = [];
+        zone["points"] = [];
+        zone["points"][0] = [];
+        zone["points"][1] = [];
+        zone["points"][2] = [];
+        zone["points"][3] = [];
         zone["points"][0]["x"] = startX;
         zone["points"][0]["y"] = startY;
         zone["points"][1]["x"] = startX + 100;
@@ -489,7 +489,7 @@ function getZoneByCord(x, y, id) {
         for (let point of zone["points"]) {
             if (point["x"] !== null && point["y"] !== null) {
                 if (x > point["x"] - 7 && x < point["x"] + 7 && y > point["y"] - 7 && y < point["y"] + 7) {
-                    let zoneContext = Array();
+                    let zoneContext = [];
                     zoneContext["zone"] = zone;
                     zoneContext["id"] = i;
                     return zoneContext;
@@ -506,7 +506,7 @@ function getCursorPosition(canvas, event, id) {
     const rect = canvas.getBoundingClientRect()
     const x = event.clientX - rect.left
     const y = event.clientY - rect.top
-    let context = Array();
+    let context = [];
 
     context["point"] = getPointByCord(x, y, id);
     context ["zone"] = getZoneByCord(x, y, id)['zone'];
@@ -772,7 +772,7 @@ function saturate(id) {
 
 function okoStringToArray(string) {
     let raws = string.split(", ");
-    let elems = Array();
+    let elems = [];
     let i = 0;
     for (let raw of raws) {
         let string = raw;

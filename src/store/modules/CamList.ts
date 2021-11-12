@@ -11,6 +11,7 @@ class CamList {
     private _nmsThresh: number; //0.35
     private _camList: Cam[];
     private _camEventList: CamEvent[];
+    private _json_obj: JSON;
 
     constructor(value: any) {
         this._serverIp = value.serverIp;
@@ -83,6 +84,15 @@ class CamList {
 
     set camList(value: Cam[]) {
         this._camList = value;
+    }
+
+    public parseJSON(value: string): void {
+        this._json_obj = JSON.parse(value);
+        console.log(this._json_obj);
+    }
+
+    public getJSON(): JSON{
+        return this._json_obj;
     }
 }
 

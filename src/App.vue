@@ -11,6 +11,7 @@
 import CameraTile from "@/components/CameraTile.vue"
 import Header from "@/components/Header.vue"
 
+
 export default {
 
   components: {
