@@ -29,8 +29,8 @@ const json_obj: string = "{\n" +
     "    \"serverIp\": \"192.168.5.102\"\n" +
     "}";
 
-let camList: CamList = new CamList("TEST");
+const camList: CamList = new CamList("TEST");
 camList.parseJSON(json_obj);
-let list: JSON = camList.getJSON();
-let l = JSON.stringify(list);
-export default l;
+const list: JSON = camList.getJSON();
+const parsed_list: string = JSON.stringify(list);
+export default parsed_list;
