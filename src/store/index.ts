@@ -31,6 +31,4 @@ const json_obj: string = "{\n" +
 
 const camList: CamList = new CamList("TEST");
 camList.parseJSON(json_obj);
-const list: JSON = camList.getJSON();
-const parsed_list: string = JSON.stringify(list);
-export default parsed_list;
+export default camList;

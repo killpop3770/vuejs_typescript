@@ -1,24 +1,24 @@
 <template>
 
-  <div class="tile">{{parsed_list}}</div>
+  <div class="tile" v-bind:key="camList.camList">{{camList.camList[0]}}</div>
+  <!--  <div class="tile"></div>-->
 </template>
-
 
 
 <script lang="ts">
 import {Vue} from "vue-class-component";
-import parsed_list from "@/store";
+import camList from "@/store";
 
-export default class Tile extends Vue{
+export default class Tile extends Vue {
   name: "CameraTile"
-  data(){
-    return{
-      parsed_list,
+
+  data() {
+    return {
+      camList,
     }
   }
 }
 </script>
-
 
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -31,5 +31,6 @@ export default class Tile extends Vue{
   color: black;
   padding: 15px;
   margin: 10px auto 10px auto;
+  background-color: #bada55;
 }
 </style>
