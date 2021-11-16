@@ -2,7 +2,7 @@
   <Header/>
   <div>
     <!--     https://github.com/Roman1510/memory-card-game/blob/main/src/App.vue-->
-    <CameraTile v-for="cameraTile in camList.camList" v-bind:key="cameraTile"/>
+    <CameraTile v-for="cameraTile in camList.camList" v-bind:key="cameraTile" v-text="cameraTile"></CameraTile> <!--TODO: REDO!!!-->
   </div>
 </template>
 

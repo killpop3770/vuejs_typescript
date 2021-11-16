@@ -1,6 +1,6 @@
 <template>
 
-  <div class="tile" v-bind:key="camList.camList">{{camList.camList[0]}}</div>
+  <div class="tile" v-bind:key="camList.camList"></div>
   <!--  <div class="tile"></div>-->
 </template>
 
