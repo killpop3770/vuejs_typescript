@@ -1,9 +1,11 @@
 <template>
   <!--     https://github.com/Roman1510/memory-card-game/blob/main/src/App.vue-->
   <div class="tile" v-for="cameraTile in camList.camList" v-bind:key="cameraTile">
-    {{ cameraTile.camName }}
-    <CameraCanvas/>
-    <Settings/>
+    <div class="tile-header">{{ cameraTile.camName }}</div>
+    <div class="box">
+      <CameraCanvas/>
+      <Settings/>
+    </div>
     <!--    {{ cameraTile.camUrl }},-->
     <!--    {{ cameraTile.camIsActive }},-->
 
@@ -42,7 +44,23 @@ export default {
   border-radius: 10px;
   color: black;
   padding: 15px;
-  margin: 10px auto 10px auto;
+  margin: 10px auto 10px auto; /* up right down left */
   background-color: #bada55;
 }
+
+.tile-header{
+  background-color: #ffc720;
+  display: flex;
+  border: 2px solid black;
+  border-radius: 5px;
+  height: 30px;
+  justify-content: center;
+}
+
+.box{
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 25px 0 30px;  /* up right down left */
+}
+
 </style>

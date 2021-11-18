@@ -13,10 +13,11 @@ export default {
 <style scoped>
 .header {
   display: flex;
-  margin: auto;
+  /*margin: auto;*/
   border: 3px solid black;
   justify-content: center;
   background-color: #ffc720;
   height: 100px;
+  margin: 10px 0 50px 0;
 }
 </style>

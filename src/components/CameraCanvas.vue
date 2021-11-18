@@ -15,11 +15,10 @@ export default  {
 
 <style scoped>
 .camera-canvas{
-  height: 100px;
-  width: 100px;
-  border-color: black;
+  height: 200px;
+  width: 500px;
+  border: 2px solid black;
   background-color: #699bf7;
-  border-width: 1px;
   border-radius: 10px;
 }
 </style>

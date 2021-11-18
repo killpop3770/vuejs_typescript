@@ -13,11 +13,11 @@ export default {
 
 <style scoped>
 .settings {
-  height: 100px;
-  width: 100px;
+  height: 200px;
+  width: 200px;
   border-color: black;
   background-color: orange;
-  border-width: 1px;
   border-radius: 10px;
+  border: 2px solid black;
 }
 </style>
