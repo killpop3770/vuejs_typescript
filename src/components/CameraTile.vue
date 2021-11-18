@@ -1,16 +1,28 @@
 <template>
+  <!--     https://github.com/Roman1510/memory-card-game/blob/main/src/App.vue-->
+  <div class="tile" v-for="cameraTile in camList.camList" v-bind:key="cameraTile">
+    {{ cameraTile.camName }}
+    <CameraCanvas/>
+    <Settings/>
+    <!--    {{ cameraTile.camUrl }},-->
+    <!--    {{ cameraTile.camIsActive }},-->
 
-  <div class="tile" v-bind:key="camList.camList"></div>
-  <!--  <div class="tile"></div>-->
+  </div>
 </template>
 
 
 <script lang="ts">
-import {Vue} from "vue-class-component";
 import camList from "@/store";
+import CameraCanvas from "@/components/CameraCanvas.vue";
+import Settings from "@/components/Settings.vue";
 
-export default class Tile extends Vue {
-  name: "CameraTile"
+export default {
+  name: "CameraTile",
+
+  components: {
+    CameraCanvas,
+    Settings,
+  },
 
   data() {
     return {

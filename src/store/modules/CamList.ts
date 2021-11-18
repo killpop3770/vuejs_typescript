@@ -104,8 +104,10 @@ class CamList {
         for (let i = 0; i < num_of_tile; i++) {
             const data_of_camera: any = this._json_obj.camList.cam[i];
 
-            const cam0: Cam = new Cam(data_of_camera.camName);
+            // const cam0: Cam = new Cam(data_of_camera.camName);
+            const cam0: Cam = new Cam();
 
+            cam0.camName = data_of_camera.camName;
             cam0.camUrl = data_of_camera.camUrl;
             cam0.camUser = data_of_camera.camUser;
             cam0.camPwd = data_of_camera.camPwd;
@@ -114,8 +116,10 @@ class CamList {
             cam0.camRoi = data_of_camera.camRoi;
             cam0.camGroup = data_of_camera.camGroup;
 
+            console.log(data_of_camera.camRoi[0]);
+
+
             this._camList.push(cam0);
-            // console.log(cam0);
         }
 
     }

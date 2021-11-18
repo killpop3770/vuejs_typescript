@@ -15,6 +15,17 @@ const json_obj: string = "{\n" +
     "            },\n" +
     "\n" +
     "            {\n" +
+    "                \"camUrl\": \"http://admin:coolGrap356@192.168.5.65/ISAPI/Streaming/channels/101/picture?snapShotImageType=JPEG\",\n" +
+    "                \"camUser\": \"admin\",\n" +
+    "                \"camPwd\": \"coolGrap356\",\n" +
+    "                \"camIsActive\": false,\n" +
+    "                \"camModel\": \"hwat DR-I450\",\n" +
+    "                \"camRoi\": [\"[500 800], [540 800], [1500 1000], [1280 600]\"],\n" +
+    "                \"camGroup\": \"Interpolitex\",\n" +
+    "                \"camName\": \"Камера 2\"\n" +
+    "            },\n" +
+    "\n" +
+    "            {\n" +
     "                \"camUrl\": \"http://admin:coolGrap356@192.168.5.119/ISAPI/Streaming/channels/101/picture?snapShotImageType=JPEG\",\n" +
     "                \"camUser\": \"admin\",\n" +
     "                \"camPwd\": \"coolGrap356\",\n" +
@@ -22,7 +33,7 @@ const json_obj: string = "{\n" +
     "                \"camModel\": \"hiwatch DS-I202\",\n" +
     "                \"camRoi\": [\"null\"],\n" +
     "                \"camGroup\": \"Interpolitex\",\n" +
-    "                \"camName\": \"Камера 2\"\n" +
+    "                \"camName\": \"Камера 3\"\n" +
     "            }\n" +
     "        ]\n" +
     "    },\n" +

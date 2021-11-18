@@ -12,9 +12,9 @@ class Cam {
     private _camGroup: string;
     private _camName: string;
 
-    constructor(camModel: string) {
-        this._camModel = camModel;
-    }
+    // constructor(camModel: string) {
+    //     this._camModel = camModel;
+    // }
 
     get camModel(): string {
         return this._camModel;
