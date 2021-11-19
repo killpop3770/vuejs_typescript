@@ -40,7 +40,7 @@ export default {
 .tile {
   width: 1000px;
   height: 300px;
-  border: 3px solid black;
+  border: 2px solid black;
   border-radius: 10px;
   color: black;
   padding: 15px;
