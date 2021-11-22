@@ -1,5 +1,8 @@
 <template>
   <Header/>
+  <br>
+  <br>
+  <br>
   <div>
     <CameraTile/>
   </div>
