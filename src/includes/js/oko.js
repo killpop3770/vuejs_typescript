@@ -1,20 +1,23 @@
+import $ from "jquery"
+import Mustache from 'mustache'
+
 const CANVAS_WIDTH = 768.0;
 const CANVAS_HEIGHT = 432.0;
 const CANVAS_POINT_SIZE = 7;
 const CANVAS_LINE_THICKNESS = 4;
 //const OKO_IP="okoapi.com";
-const OKO_IP="http://192.168.5.102:8080/";
+const OKO_IP = "http://192.168.5.102:8080/";
 //const OKO_IP=window.location.href;
-const OKO_GET=OKO_IP+"conf";
-const OKO_PUT=OKO_IP+"conf";
-const OKO_APPLY=OKO_IP+"apply";
-const LOAD_TIME=2000;
+const OKO_GET = OKO_IP + "conf";
+const OKO_PUT = OKO_IP + "conf";
+const OKO_APPLY = OKO_IP + "apply";
+const LOAD_TIME = 2000;
 const DEV_image = false;
 
 
 let canvasesAndZones = [];
 let zonesArray = [];
-let cam;
+let cam = [];
 let fillColors = [];
 let strokeColors = [];
 fillColors[0] = "rgba(253,152,152,0.5)";
@@ -49,7 +52,7 @@ function initZoneContainer() {
     for (let i = 0; i < cam.length; i++) {
         let secondTabContent = document.getElementById("tabContent-" + i + "-1");
         canvasesAndZones[i] = [];
-        if (cam[i].camRoi[0] != "null") {
+        if (cam[i].camRoi[0] !== "null") {
             zonesArray[i] = [];
             for (let j = 0; j < cam[i].camRoi.length; j++) {
                 zonesArray[i][j] = [];
@@ -128,11 +131,7 @@ function initZoneContainer() {
     let checkbox = document.getElementById("enableZones");
     checkbox.checked = true;
     checkbox.addEventListener('click', function (e) {
-        if (checkbox.checked) {
-            showZones = true;
-        } else {
-            showZones = false;
-        }
+        showZones = checkbox.checked;
         for (let i = 0; i < canvasesAndZones.length; i++) {
             drawPointsSingleCanvas(i);
         }
@@ -180,7 +179,6 @@ function printZones(id, zoneId) {
     editButton.classList.add("zones-button");
     editButton.classList.add("edit-button");
     editButton.id = "editZone-" + id + "-" + zoneId;
-
     deleteButton.classList.add("zones-button");
     deleteButton.classList.add("delete-button");
     deleteButton.id = "deleteZone-" + id + "-" + zoneId;
@@ -301,7 +299,7 @@ function initCanvas() {
 }
 
 function addPoint(canvas, e, id) {
-    if (editId != null && editId == id) {
+    if (editId != null && editId === id) {
         let idCanvas = id.split("-")[1];
         const rect = canvas.getBoundingClientRect()
         const x = e.clientX - rect.left;
@@ -370,7 +368,7 @@ function drawZone(id) {
     let canvas = canvasesAndZones[id];
     let startX = (canvas['canvas'].width - 100) / 2;
     let startY = (canvas['canvas'].height - 100) / 2;
-    if (canvas["zones"].length == 0) {
+    if (canvas["zones"].length === 0) {
 
         //console.log(startX);
         let zone = [];
@@ -434,7 +432,7 @@ function drawPointsSingleCanvas(id) {
             for (let point of zone["points"]) {
                 if (point["x"] !== null && point["y"] !== null) {
                     ctx.fillStyle = strokeColors[i];
-                    if (editId != null && editId == i) {
+                    if (editId != null && editId === i) {
                         ctx.beginPath();
                         ctx.arc(point["x"], point["y"], 8, 0, Math.PI * 2, true);
                         ctx.fill();
@@ -445,7 +443,7 @@ function drawPointsSingleCanvas(id) {
                     ctx.lineWidth = 4;
                     ctx.moveTo(point["x"], point["y"]);
                     //console.log(point["x"], point["y"])
-                    if (editId != null && editId == i) {
+                    if (editId != null && editId === i) {
                         if (zone["points"][j + 1] !== null && zone["points"][j + 1] !== undefined) {
                             ctx.lineTo(zone["points"][j + 1]["x"], zone["points"][j + 1]["y"]);
                             ctx.stroke();
@@ -523,12 +521,12 @@ function movePoint(canvas, event, context, id) {
         let zone = context["zone"]["points"].slice();
         let i = 0;
         for (; i < zone.length; i++) {
-            if (zone[i]["x"] == point["x"] && zone[i]["y"] == point["y"]) {
+            if (zone[i]["x"] === point["x"] && zone[i]["y"] === point["y"]) {
                 break;
             }
         }
         console.log(editId, context['id'])
-        if (point !== null && point !== undefined && editId == context['id']) {
+        if (point !== null && point !== undefined && editId === context['id']) {
             const rect = canvas.getBoundingClientRect();
             const x = event.clientX - rect.left;
             const y = event.clientY - rect.top;
@@ -544,15 +542,15 @@ function movePoint(canvas, event, context, id) {
 }
 
 function getAngle(A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y) {
-    var dAx = A2x - A1x;
-    var dAy = A2y - A1y;
-    var dBx = B2x - B1x;
-    var dBy = B2y - B1y;
-    var angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
+    let dAx = A2x - A1x;
+    let dAy = A2y - A1y;
+    let dBx = B2x - B1x;
+    let dBy = B2y - B1y;
+    let angle = Math.atan2(dAx * dBy - dAy * dBx, dAx * dBx + dAy * dBy);
 
 
     angle = angle * (180 / Math.PI);
-    if (angle == -180) {
+    if (angle === -180) {
         angle = angle * -1;
     }
     return angle;
@@ -560,9 +558,9 @@ function getAngle(A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y) {
 
 function isMovable(zone, i, x, y) {
     let angle = 0;
-    if (i == 0) {
+    if (i === 0) {
         angle = getAngle(x, y, zone[i + 1]["x"], zone[i + 1]["y"], x, y, zone[zone.length - 1]["x"], zone[zone.length - 1]["y"]);
-    } else if (i == zone.length - 1) {
+    } else if (i === zone.length - 1) {
         angle = getAngle(x, y, zone[0]["x"], zone[0]["y"], x, y, zone[i - 1]["x"], zone[i - 1]["y"]);
     } else {
         angle = getAngle(x, y, zone[i + 1]["x"], zone[i + 1]["y"], x, y, zone[i - 1]["x"], zone[i - 1]["y"]);
@@ -590,24 +588,20 @@ function checkColliding(zone, x, y) {
 }
 
 function mouseOnPoint(point, x, y) {
-    if (x > point["x"] - 7 && x < point["x"] + 7 && y > point["y"] - 7 && y < point["y"] + 7) {
-        return true;
-    } else {
-        return false;
-    }
+    return x > point["x"] - 7 && x < point["x"] + 7 && y > point["y"] - 7 && y < point["y"] + 7;
 }
 
 
 function isCircleSegmentColliding(x0, y0, x1, y1, cx, cy, cr) {
-    var dx = cx - x0;
-    var dy = cy - y0;
-    var dxx = x1 - x0;
-    var dyy = y1 - y0;
+    let dx = cx - x0;
+    let dy = cy - y0;
+    let dxx = x1 - x0;
+    let dyy = y1 - y0;
 
 
-    var t = (dx * dxx + dy * dyy) / (dxx * dxx + dyy * dyy);
-    var x = x0 + dxx * t;
-    var y = y0 + dyy * t;
+    let t = (dx * dxx + dy * dyy) / (dxx * dxx + dyy * dyy);
+    let x = x0 + dxx * t;
+    let y = y0 + dyy * t;
     if (t < 0) {
         x = x0;
         y = y0;
@@ -624,22 +618,22 @@ function getSpanClass(id) {
     switch (id) {
         case 0:
             return "dot-red";
-            break;
+        // break;
         case 1:
             return "dot-yellow";
-            break;
+        // break;
         case 2:
             return "dot-blue"
-            break;
+        // break;
         case 3:
             return "dot-purple"
-            break;
+        // break;
         case 4:
             return "dot-green"
-            break;
+        // break;
         default:
             return "dot-red"
-            return
+        // return
     }
 }
 
@@ -664,7 +658,7 @@ function handleTabClick(e) {
             if (child.classList.contains("settings-card-content")) {
                 child.classList.remove("content-active");
                 child.classList.add("content-hidden");
-                if (child.id.slice(-1) == index) {
+                if (child.id.slice(-1) === index) {
                     child.classList.remove("content-hidden");
                     child.classList.add("content-active");
                 }
@@ -722,6 +716,7 @@ function loadCameras() {
                         responseType: 'blob'
                     },
                     error: function () {
+                        console.log("Error in function loadCameras()")
                     }
                 }).done(function (html) {
                     let url = window.URL || window.webkitURL;
@@ -766,7 +761,7 @@ function updateCameras() {
 }
 
 function saturate(id) {
-    var img = document.getElementById(id);
+    let img = document.getElementById(id);
     img.style.webkitFilter = 'saturate(200%)';
 }
 
@@ -787,6 +782,9 @@ function okoStringToArray(string) {
 }
 
 //Canvas section
-function canvasInit() {
+export function canvasInit() {
     let canvases = document.getElementsByClassName("oko-canvas");
+    console.log("OK")
 }
+
+// export default canvasInit; //, okoStringToArray, saturate, updateCameras, drawPolygons, addEmptyImagePlaceholder, loadCameras, handleTabClick}

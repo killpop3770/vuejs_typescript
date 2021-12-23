@@ -9,8 +9,22 @@
 </template>
 
 <script>
+import {canvasInit, cam} from "@/includes/js/oko.js"
+import camList from "@/store";
+
+// console.log(cam)
+
 export default {
-  name: "CameraCanvas"
+  name: "CameraCanvas",
+  data() {
+    return {
+      cam: camList,
+    }
+  },
+  computed: {
+    canvasInit,
+
+  },
 }
 </script>
 

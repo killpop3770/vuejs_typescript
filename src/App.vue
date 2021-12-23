@@ -6,6 +6,7 @@
   <div>
     <CameraTile/>
   </div>
+  <br>
 </template>
 
 

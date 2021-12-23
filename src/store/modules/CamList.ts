@@ -86,6 +86,10 @@ class CamList {
         this._camList = value;
     }
 
+    get length() {
+        return this._camList.length;
+    }
+
     get json_obj(): JSON {
         return this._json_obj;
     }
