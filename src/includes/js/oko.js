@@ -44,7 +44,6 @@ function initTabs() {
         element.addEventListener('click', handleTabClick);
     });
 
-
     initZoneContainer();
 }
 
@@ -273,11 +272,17 @@ function stopEdit(canvasId) {
 }
 
 function initCanvas() {
+
+    // let test = [];
+    // test.push([]);
+    // test[0]['test'] = 123;
+    // console.log(test)
+
     let canvases = document.getElementsByClassName("oko-canvas");
     console.log("271: ", canvases);
     let i = 0;
     for (let canvas of canvases) {
-
+        // canvasesAndZones.push([{"canvas":0}]);
         canvasesAndZones[i]['canvas'] = canvas;
         canvas.addEventListener('mousedown', function (e) {
             let context = getCursorPosition(canvas, e, canvas.id);
@@ -414,53 +419,55 @@ function drawPointsSingleCanvas(id) {
     let ctx = canvas["canvas"].getContext("2d");
     ctx.clearRect(0, 0, canvas["canvas"].width, canvas["canvas"].height);
     let i = 0;
+    console.log("canvas is here!");
     console.log(canvas);
     console.log(canvas["zones"]);
-    for (let zone of canvas["zones"]) {
 
-        let j = 0;
-        if (editId != null || showZones) {
-            ctx.beginPath();
-            ctx.fillStyle = fillColors[i];
+        for (let zone of canvas["zones"]) {
 
-            ctx.moveTo(zone["points"][0]["x"], zone["points"][0]["y"]);
-            for (let k = 1; k < zone["points"].length; k++) {
-                ctx.lineTo(zone["points"][k]["x"], zone["points"][k]["y"]);
-            }
-            ctx.fill();
-            ctx.closePath();
-            for (let point of zone["points"]) {
-                if (point["x"] !== null && point["y"] !== null) {
-                    ctx.fillStyle = strokeColors[i];
-                    if (editId != null && editId === i) {
+            let j = 0;
+            if (editId != null || showZones) {
+                ctx.beginPath();
+                ctx.fillStyle = fillColors[i];
+
+                ctx.moveTo(zone["points"][0]["x"], zone["points"][0]["y"]);
+                for (let k = 1; k < zone["points"].length; k++) {
+                    ctx.lineTo(zone["points"][k]["x"], zone["points"][k]["y"]);
+                }
+                ctx.fill();
+                ctx.closePath();
+                for (let point of zone["points"]) {
+                    if (point["x"] !== null && point["y"] !== null) {
+                        ctx.fillStyle = strokeColors[i];
+                        if (editId != null && editId === i) {
+                            ctx.beginPath();
+                            ctx.arc(point["x"], point["y"], 8, 0, Math.PI * 2, true);
+                            ctx.fill();
+                            ctx.closePath();
+                        }
                         ctx.beginPath();
-                        ctx.arc(point["x"], point["y"], 8, 0, Math.PI * 2, true);
-                        ctx.fill();
+                        ctx.strokeStyle = strokeColors[i];
+                        ctx.lineWidth = 4;
+                        ctx.moveTo(point["x"], point["y"]);
+                        //console.log(point["x"], point["y"])
+                        if (editId != null && editId === i) {
+                            if (zone["points"][j + 1] !== null && zone["points"][j + 1] !== undefined) {
+                                ctx.lineTo(zone["points"][j + 1]["x"], zone["points"][j + 1]["y"]);
+                                ctx.stroke();
+                            } else {
+                                ctx.lineTo(zone["points"][0]["x"] - 2, zone["points"][0]["y"]);
+                                ctx.stroke();
+                            }
+                        }
                         ctx.closePath();
                     }
-                    ctx.beginPath();
-                    ctx.strokeStyle = strokeColors[i];
-                    ctx.lineWidth = 4;
-                    ctx.moveTo(point["x"], point["y"]);
-                    //console.log(point["x"], point["y"])
-                    if (editId != null && editId === i) {
-                        if (zone["points"][j + 1] !== null && zone["points"][j + 1] !== undefined) {
-                            ctx.lineTo(zone["points"][j + 1]["x"], zone["points"][j + 1]["y"]);
-                            ctx.stroke();
-                        } else {
-                            ctx.lineTo(zone["points"][0]["x"] - 2, zone["points"][0]["y"]);
-                            ctx.stroke();
-                        }
-                    }
-                    ctx.closePath();
+                    j++;
                 }
-                j++;
             }
+
+
+            i++;
         }
-
-
-        i++;
-    }
 }
 
 function getPointByCord(x, y, id) {
@@ -557,7 +564,7 @@ function getAngle(A1x, A1y, A2x, A2y, B1x, B1y, B2x, B2y) {
 }
 
 function isMovable(zone, i, x, y) {
-    let angle = 0;
+    let angle;
     if (i === 0) {
         angle = getAngle(x, y, zone[i + 1]["x"], zone[i + 1]["y"], x, y, zone[zone.length - 1]["x"], zone[zone.length - 1]["y"]);
     } else if (i === zone.length - 1) {
