@@ -6,7 +6,7 @@ const CANVAS_HEIGHT = 432.0;
 const CANVAS_POINT_SIZE = 7;
 const CANVAS_LINE_THICKNESS = 4;
 //const OKO_IP="okoapi.com";
-const OKO_IP = "http://192.168.5.102:8080/";
+const OKO_IP = "http://192.168.5.108:8080/";
 //const OKO_IP=window.location.href;
 const OKO_GET = OKO_IP + "conf";
 const OKO_PUT = OKO_IP + "conf";
@@ -93,6 +93,7 @@ function initZoneContainer() {
                 canvasesAndZones[i]['zones'][j] = [];
                 canvasesAndZones[i]['zones'][j]["points"] = [];
                 canvasesAndZones[i]['zones'][j]["points"] = okoStringToArray(cam[i].camRoi[j]);
+
             }
         }
     }
@@ -106,6 +107,7 @@ function initZoneContainer() {
     let buttons2 = document.getElementsByClassName("add-zone-button");
     for (let button of buttons2) {
         let ids = button.id.split("-");
+        console.log(ids);
         button.addEventListener('click', function (e) {
             let zoneId = addZoneFromButton(ids[1]);
             printZones(ids[1], zoneId);
@@ -152,7 +154,7 @@ function initZoneContainer() {
             }
         }
     });
-    initCanvas();
+    // initCanvas();
 }
 
 function printZones(id, zoneId) {
@@ -227,7 +229,23 @@ function editClick(canvasId, zoneId) {
 }
 
 function addZoneFromButton(canvasId) {
+
+    // console.log("CNZ: ", canvasesAndZones);
+    // return 1;
+
+    console.log(canvasesAndZones[canvasId]);
+
+    // let arr = {"canvas" : {"width":"123", "height":"321"}};
+    // console.log(arr["canvas"].width);
+    // console.log(arr["canvas"].height);
+
     let canvas = canvasesAndZones[canvasId];
+
+    // const CANVAS_WIDTH = 768.0;
+    // const CANVAS_HEIGHT = 432.0;
+
+    canvas['canvas'] = {"width":CANVAS_WIDTH, "height":CANVAS_HEIGHT};
+
     let startX = (canvas['canvas'].width - 100) / 2;
     let startY = (canvas['canvas'].height - 100) / 2;
     let zone = [];
@@ -249,6 +267,7 @@ function addZoneFromButton(canvasId) {
 
     drawPointsSingleCanvas(canvasId);
     console.log(canvasesAndZones);
+    console.log(id);
     return id;
 }
 
@@ -272,11 +291,6 @@ function stopEdit(canvasId) {
 }
 
 function initCanvas() {
-
-    // let test = [];
-    // test.push([]);
-    // test[0]['test'] = 123;
-    // console.log(test)
 
     let canvases = document.getElementsByClassName("oko-canvas");
     console.log("271: ", canvases);
@@ -423,51 +437,54 @@ function drawPointsSingleCanvas(id) {
     console.log(canvas);
     console.log(canvas["zones"]);
 
-        for (let zone of canvas["zones"]) {
+    for (let zone of canvas["zones"]) {
 
-            let j = 0;
-            if (editId != null || showZones) {
-                ctx.beginPath();
-                ctx.fillStyle = fillColors[i];
+        let j = 0;
+        if (editId != null || showZones) {
+            ctx.beginPath();
+            ctx.fillStyle = fillColors[i];
 
-                ctx.moveTo(zone["points"][0]["x"], zone["points"][0]["y"]);
-                for (let k = 1; k < zone["points"].length; k++) {
-                    ctx.lineTo(zone["points"][k]["x"], zone["points"][k]["y"]);
-                }
-                ctx.fill();
-                ctx.closePath();
-                for (let point of zone["points"]) {
-                    if (point["x"] !== null && point["y"] !== null) {
-                        ctx.fillStyle = strokeColors[i];
-                        if (editId != null && editId === i) {
-                            ctx.beginPath();
-                            ctx.arc(point["x"], point["y"], 8, 0, Math.PI * 2, true);
-                            ctx.fill();
-                            ctx.closePath();
-                        }
-                        ctx.beginPath();
-                        ctx.strokeStyle = strokeColors[i];
-                        ctx.lineWidth = 4;
-                        ctx.moveTo(point["x"], point["y"]);
-                        //console.log(point["x"], point["y"])
-                        if (editId != null && editId === i) {
-                            if (zone["points"][j + 1] !== null && zone["points"][j + 1] !== undefined) {
-                                ctx.lineTo(zone["points"][j + 1]["x"], zone["points"][j + 1]["y"]);
-                                ctx.stroke();
-                            } else {
-                                ctx.lineTo(zone["points"][0]["x"] - 2, zone["points"][0]["y"]);
-                                ctx.stroke();
-                            }
-                        }
-                        ctx.closePath();
-                    }
-                    j++;
-                }
+            ctx.moveTo(zone["points"][0]["x"], zone["points"][0]["y"]);
+            for (let k = 1; k < zone["points"].length; k++) {
+                ctx.lineTo(zone["points"][k]["x"], zone["points"][k]["y"]);
             }
-
-
-            i++;
+            ctx.fill();
+            ctx.closePath();
+            for (let point of zone["points"]) {
+                if (point["x"] !== null && point["y"] !== null) {
+                    ctx.fillStyle = strokeColors[i];
+                    if (editId != null && editId === i) {
+                        ctx.beginPath();
+                        ctx.arc(point["x"], point["y"], 8, 0, Math.PI * 2, true);
+                        ctx.fill();
+                        ctx.closePath();
+                        let arr = [{"x":123, "y":321}, {"x":123, "y":321}, {"x":123, "y":321}];
+                        let arr2 = arr[arr.length];
+                        arr2["x"];
+                    }
+                    ctx.beginPath();
+                    ctx.strokeStyle = strokeColors[i];
+                    ctx.lineWidth = 4;
+                    ctx.moveTo(point["x"], point["y"]);
+                    //console.log(point["x"], point["y"])
+                    if (editId != null && editId === i) {
+                        if (zone["points"][j + 1] !== null && zone["points"][j + 1] !== undefined) {
+                            ctx.lineTo(zone["points"][j + 1]["x"], zone["points"][j + 1]["y"]);
+                            ctx.stroke();
+                        } else {
+                            ctx.lineTo(zone["points"][0]["x"] - 2, zone["points"][0]["y"]);
+                            ctx.stroke();
+                        }
+                    }
+                    ctx.closePath();
+                }
+                j++;
+            }
         }
+
+
+        i++;
+    }
 }
 
 function getPointByCord(x, y, id) {
@@ -676,7 +693,28 @@ function handleTabClick(e) {
 }
 
 function loadCameras() {
+
+    // let settings = {
+    //     'contentType': 'application/json',
+    //     'dataType': "jsonp",
+    //     "url": OKO_GET,
+    //     "method": "GET",
+    //
+    //     "headers": {
+    //         'Access-Control-Allow-Credentials': true,
+    //         'Access-Control-Allow-Headers': 'application/json',
+    //         "Access-Control-Allow-Origin": "*",
+    //         'Access-Control-Allow-Methods': 'GET',
+    //     }
+    // }
+    //
+    // $.ajax(settings).done(function (response) {
+    //     console.log(response);
+    // });
+
+
     $.getJSON(OKO_GET, function (data, status) {
+        console.log(data);
         cam = data.camList.cam;
         let i = 0;
         for (let oneCamera of cam) {

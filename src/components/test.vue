@@ -1,31 +1,101 @@
 <template>
   <div class="col-lg-8">
     <div class="image-container">
-      <img id="{{camId}}" class="camera-image">
-      <canvas id="{{canvasId}}" width="{{canvasWidth}}" height="{{canvasHeight}}"
+      <img id="0" class="camera-image" src="https://pp.userapi.com/c855028/v855028243/384a7/alrbJjDsuPE.jpg">
+      <canvas id="0" width="768.0" height="432.0"
               class="oko-canvas"></canvas>
     </div>
+    <button class="create-button">
+      Create
+    </button>
   </div>
 </template>
 
 <script>
-import {canvasInit, cam} from "@/includes/js/oko.js"
-// import camList from "@/store";
-
-// console.log(cam)
-
 export default {
-  name: "CameraCanvas",
-  // data() {
-    // return {
-    //   cam: camList,
-    // }
-  // },
-  computed: {
-    canvasInit,
-
-  },
+  name: "test"
 }
+
+/* let dot = {"id":0,"x":0, "y":0}; */
+// для отрисовки используются только данные точек
+let arrayForDots = [];
+
+function testcreate(){
+  console.log(arrayForDots);
+  console.log(arrayForDots.length);
+}
+
+let buttons = document.getElementsByClassName("create-button");
+for (let button of buttons) {
+  button.addEventListener('click', function(e){
+    testcreate();
+  });
+}
+
+
+let canvases = document.getElementsByClassName("oko-canvas");
+for (let canvas of canvases) {
+  canvas.addEventListener("mouseup", function(e){
+    console.log("X: ", e.pageX, " Y: ", e.pageY);
+    let x = e.pageX - e.target.offsetLeft;
+    let y = e.pageY - e.target.offsetTop;
+    if(arrayForDots.length > 2){
+      if (Math.abs(arrayForDots[0].x - x) < 10 & Math.abs(arrayForDots[0].y - y) > 10){
+        createEndOfLine(canvas);
+      }
+    } else {
+      createDot(x, y, canvas);
+      arrayForDots.push({"x":x, "y":y});
+      createLine(canvas);
+    }
+  });
+}
+
+function createDot(x, y, canvas){
+  let ctx = canvas.getContext("2d");
+  ctx.beginPath();
+  ctx.fillStyle = "red";
+  ctx.arc(x - 6, y - 6, 8, 0, Math.PI * 2, true);
+  ctx.fill();
+  ctx.stroke();
+}
+
+function createLine(canvas){
+  if (arrayForDots.length > 1){
+    let ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    let lineDots = getPrevCurrDots();
+    previousDot = lineDots["prev"];
+    currentDot = lineDots["curr"];
+    ctx.moveTo(previousDot["x"], previousDot["y"]);
+    ctx.lineTo(currentDot["x"], currentDot["y"]);
+    ctx.stroke();
+  }
+}
+
+function getPrevCurrDots(){
+  let prev = arrayForDots[arrayForDots.length - 2];
+  let curr = arrayForDots[arrayForDots.length - 1];
+  return {"prev":prev, "curr":curr};
+}
+
+function createEndOfLine(canvas){
+  if (arrayForDots.length > 2){
+    let ctx = canvas.getContext("2d");
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    beginDot = arrayForDots[0];
+    endDot = arrayForDots[arrayForDots.length - 1];
+    ctx.moveTo(beginDot["x"], beginDot["y"]);
+    ctx.lineTo(endDot["x"], endDot["y"]);
+    ctx.stroke();
+    console.log("end of line!")
+  }
+}
+
 </script>
 
 <style scoped>

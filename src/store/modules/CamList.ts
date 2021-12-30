@@ -120,7 +120,7 @@ class CamList {
             cam0.camRoi = data_of_camera.camRoi;
             cam0.camGroup = data_of_camera.camGroup;
 
-            console.log(data_of_camera.camRoi[0]);
+            // console.log(data_of_camera.camRoi[0]);
 
 
             this._camList.push(cam0);
