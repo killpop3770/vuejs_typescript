@@ -20,38 +20,50 @@ export default {
 // для отрисовки используются только данные точек
 let arrayForDots = [];
 
-function testcreate(){
+// debug function
+function testCreate() {
   console.log(arrayForDots);
   console.log(arrayForDots.length);
 }
 
+// Button for create poly
 let buttons = document.getElementsByClassName("create-button");
 for (let button of buttons) {
-  button.addEventListener('click', function(e){
-    testcreate();
+  button.addEventListener('click', function (e) {
+    // testCreate();
+    createCanvas();
   });
 }
 
 
-let canvases = document.getElementsByClassName("oko-canvas");
-for (let canvas of canvases) {
-  canvas.addEventListener("mouseup", function(e){
-    console.log("X: ", e.pageX, " Y: ", e.pageY);
-    let x = e.pageX - e.target.offsetLeft;
-    let y = e.pageY - e.target.offsetTop;
-    if(arrayForDots.length > 2){
-      if (Math.abs(arrayForDots[0].x - x) < 10 & Math.abs(arrayForDots[0].y - y) > 10){
-        createEndOfLine(canvas);
-      }
-    } else {
-      createDot(x, y, canvas);
-      arrayForDots.push({"x":x, "y":y});
-      createLine(canvas);
+function createCanvas() {
+  if (!endFlag) {
+    let canvases = document.getElementsByClassName("oko-canvas");
+    for (let canvas of canvases) {
+      let canvasWorkFunction;
+      canvas.addEventListener("mouseup", canvasWorkFunction = function (e) {
+        console.log("X: ", e.pageX, " Y: ", e.pageY);
+        let x = e.pageX - e.target.offsetLeft;
+        let y = e.pageY - e.target.offsetTop;
+        if (arrayForDots.length > 2) {
+          if (Math.abs(arrayForDots[0].x - x) < 15 && Math.abs(arrayForDots[0].y - y) < 15) {
+            let endFlag = createEndOfLine(canvas);
+            if (endFlag) {
+              canvas.removeEventListener('mouseup', canvasWorkFunction);
+            }
+          }
+        } else {
+          createDot(x, y, canvas);
+          arrayForDots.push({"x": x, "y": y});
+          createLine(canvas);
+        }
+      });
     }
-  });
+  }
 }
 
-function createDot(x, y, canvas){
+
+function createDot(x, y, canvas) {
   let ctx = canvas.getContext("2d");
   ctx.beginPath();
   ctx.fillStyle = "red";
@@ -60,35 +72,35 @@ function createDot(x, y, canvas){
   ctx.stroke();
 }
 
-function createLine(canvas){
-  if (arrayForDots.length > 1){
+function createLine(canvas) {
+  if (arrayForDots.length > 1) {
     let ctx = canvas.getContext("2d");
     ctx.strokeStyle = "red";
     ctx.lineWidth = 3;
     ctx.beginPath();
     let lineDots = getPrevCurrDots();
-    previousDot = lineDots["prev"];
-    currentDot = lineDots["curr"];
+    let previousDot = lineDots["prev"];
+    let currentDot = lineDots["curr"];
     ctx.moveTo(previousDot["x"], previousDot["y"]);
     ctx.lineTo(currentDot["x"], currentDot["y"]);
     ctx.stroke();
   }
 }
 
-function getPrevCurrDots(){
+function getPrevCurrDots() {
   let prev = arrayForDots[arrayForDots.length - 2];
   let curr = arrayForDots[arrayForDots.length - 1];
-  return {"prev":prev, "curr":curr};
+  return {"prev": prev, "curr": curr};
 }
 
-function createEndOfLine(canvas){
-  if (arrayForDots.length > 2){
+function createEndOfLine(canvas) {
+  if (arrayForDots.length > 2) {
     let ctx = canvas.getContext("2d");
     ctx.strokeStyle = "red";
     ctx.lineWidth = 3;
     ctx.beginPath();
-    beginDot = arrayForDots[0];
-    endDot = arrayForDots[arrayForDots.length - 1];
+    let beginDot = arrayForDots[0];
+    let endDot = arrayForDots[arrayForDots.length - 1];
     ctx.moveTo(beginDot["x"], beginDot["y"]);
     ctx.lineTo(endDot["x"], endDot["y"]);
     ctx.stroke();
